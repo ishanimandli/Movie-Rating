@@ -7,8 +7,19 @@
 <body>
   Ratings
   <hr>
-
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p>{{ messages }}</p>
+  {% endif %}
+  {% endwith %}
+  <div>
+    {% if session.get('id') %}
+      <a href="/logout" name="logout">Log Out</a>
+    {% else %}
+        <a href="/loginPage" name="login">Log In</a>
+    {% endif%}
+  </div>
   {% block content %} put your content here {% endblock %}
-
+ 
 </body>
 </html>
