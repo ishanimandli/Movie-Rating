@@ -68,23 +68,18 @@ def log_in_page():
 def log_in():
     email = request.args.get('email')
     password = request.args.get('password')
-    is_avial = User.query.filter_by(email=email).first()
-    print(is_avial.password)
+    user = User.query.filter_by(email=email).first()
+    print(user.password)
 
-    if (is_avial is None) or (is_avial.password != password):
+    if (user is None) or (user.password != password):
         flash('Please enter correct email id or password.')
         return redirect('/loginPage')
     else:
         flash('You are successfully logged in.....')
         session['id'] = email
-
-        return redirect('/userpage')
-
-
-@app.route('/userpage')
-def userpage():
-    user= User.query.filter_by(email = session.get('id'))
-    return render_template('userPage.html',record=user)
+        
+        return render_template('userPage.html',user=user)
+    
 
     
 @app.route('/logout')
